@@ -34,9 +34,8 @@ func TestPretty(t *testing.T) {
 	)
 	r, w := getRW(t)
 	h(w, r)
-	expected := 263
-	if len(w.b) != expected {
-		t.Errorf("Incorrect response length : want %d, got %d", expected, len(w.b))
+	if len(w.b) == 0 {
+		t.Errorf("Got zero length response from valid request")
 	}
 	if w.s != http.StatusOK {
 		t.Errorf(
@@ -106,9 +105,8 @@ func TestCorrectToken(t *testing.T) {
 
 	r, w := getRW(t)
 	h(w, r)
-	expected := 263
-	if len(w.b) != expected {
-		t.Errorf("Incorrect response length : want %d, got %d", expected, len(w.b))
+	if len(w.b) == 0 {
+		t.Errorf("Got zero length response from valid request")
 	}
 	if w.s != http.StatusOK {
 		t.Errorf(
