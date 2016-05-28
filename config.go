@@ -1,8 +1,9 @@
 package main
 
 type Config struct {
-	Tokens   []string `json:"tokens,omitempty"`
-	CertFile string   `json:"certfile"`
-	KeyFile  string   `json:"keyfile"`
-	ListenOn string   `json:"listenon"`
+	Tokens     []string `json:"tokens,omitempty"`
+	CertFile   string   `json:"certfile"`
+	KeyFile    string   `json:"keyfile"`
+	ListenOn   string   `json:"listenon"`
+	CowsayExec string   `json:"cowsayexec",omitempty`
 }

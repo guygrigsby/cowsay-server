@@ -11,6 +11,10 @@ import (
 	"github.com/inconshreveable/log15"
 )
 
+const (
+	DefaultCowsay = "/usr/games/cowsay"
+)
+
 func main() {
 	configFile := flag.String("c", "./config.json", "Path to configuration file")
 	flag.Parse()
@@ -36,6 +40,7 @@ func main() {
 		"Cert Path", config.CertFile,
 		"Key Path", config.KeyFile,
 		"ListenOn", config.ListenOn,
+		"CowsayExec", config.CowsayExec,
 	)
 	tokens := make(map[string]bool)
 	for _, token := range config.Tokens {
@@ -46,10 +51,18 @@ func main() {
 		tokens[token] = true
 	}
 
+	prog := config.CowsayExec
+	if prog == "" {
+		prog = DefaultCowsay
+		log.Info(
+			"Using default cowsay location",
+			"Location", prog,
+		)
+	}
 	mux := http.NewServeMux()
 	mux.Handle(
 		"/cowsay",
-		cowsayHandler(tokens, log),
+		cowsayHandler(prog, tokens, log),
 	)
 	log.Info(
 		"Starting server...",

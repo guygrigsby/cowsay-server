@@ -9,7 +9,7 @@ import (
 	"github.com/inconshreveable/log15"
 )
 
-func cowsayHandler(tokens map[string]bool, log log15.Logger) http.HandlerFunc {
+func cowsayHandler(cowsayExec string, tokens map[string]bool, log log15.Logger) http.HandlerFunc {
 	return http.HandlerFunc(
 
 		func(w http.ResponseWriter, r *http.Request) {
@@ -39,13 +39,12 @@ func cowsayHandler(tokens map[string]bool, log log15.Logger) http.HandlerFunc {
 			}
 
 			text := r.PostFormValue("text")
-			prog := "/usr/games/cowsay"
-			out, err := exec.Command(prog, string(text)).Output()
+			out, err := exec.Command(cowsayExec, string(text)).Output()
 			if err != nil {
 				log.Error(
 					"Cowsay not found",
 					"Error", err,
-					"Location", prog,
+					"Location", cowsayExec,
 				)
 				w.WriteHeader(http.StatusInternalServerError)
 				return

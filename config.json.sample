@@ -3,7 +3,8 @@
                 "token-from-slack",
                 ""
         ],
-        "CertFile":"/path/to/fullchain.pem",
-        "KeyFile":"/path/to/privkey.pem",
-        "ListenOn":":443"
+        "certfile":"/path/to/fullchain.pem",
+        "keyfile":"/path/to/privkey.pem",
+        "listenon":":443",
+        "cowsayexec":"/usr/games/cowsay"
 }
