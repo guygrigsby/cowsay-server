@@ -26,11 +26,11 @@ Mac
 
 After you have `cowsay` proper, you need to compille the server.
 
-```go
+```bash
 go build ./...
 ```
 or the way I do it is to compile it on a Mac for a Debian server
-```go
+```bash
 env GOOS=linux GOARCH=amd64 go build
 ```
 
