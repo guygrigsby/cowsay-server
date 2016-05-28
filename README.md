@@ -15,14 +15,17 @@ In addition to the server, you'll need to set up your slack integration explaine
 
 The server is just a webserver wrapper for the `cowsay` executable. As such, you must have `cowsay` on present on the machine. If you don't have it, install it with your distro's package manager.
 
-Fedora
+Fedora:
 `yum install cowsay`
 
-Debian
+Debian:
 `apt-get install cowsay`
 
-Mac
+Mac:
 `brew install cowsay`
+
+Windows:
+srsly?
 
 After you have `cowsay` proper, you need to compille the server.
 
