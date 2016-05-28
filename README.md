@@ -18,7 +18,7 @@ The server is just a webserver wrapper for the `cowsay` executable. As such, you
 Fedora:
 `yum install cowsay`
 
-Debian:
+Debian/Ubuntu:
 `apt-get install cowsay`
 
 Mac:
