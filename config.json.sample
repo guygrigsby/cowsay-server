@@ -1,0 +1,9 @@
+{
+        "tokens":[
+                "token-from-slack",
+                ""
+        ],
+        "CertFile":"/path/to/fullchain.pem",
+        "KeyFile":"/path/to/privkey.pem",
+        "ListenOn":":443"
+}
