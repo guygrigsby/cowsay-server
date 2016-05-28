@@ -2,6 +2,8 @@ package main
 
 import (
 	"bytes"
+	"flag"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -11,10 +13,17 @@ import (
 )
 
 var (
-	token      = "asdoim896543OHFdhcluyhsdh" //made up token
-	text       = "Hello World!"
-	cowsayPath = "/usr/local/bin/cowsay"
+	token = "asdoim896543OHFdhcluyhsdh" //made up token
+	text  = "Hello World!"
 )
+
+var cowsayPath string
+
+func init() {
+	flag.StringVar(&cowsayPath, "cowsayPath", "/usr/local/bin/cowsay", "path to cowsay executable")
+	flag.Parse()
+	fmt.Printf("INIT flag=%v", cowsayPath)
+}
 
 func TestPretty(t *testing.T) {
 	log := log15.New()
