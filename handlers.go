@@ -50,8 +50,8 @@ func cowsayHandler(cowsayExec string, tokens map[string]bool, log log15.Logger) 
 				return
 			}
 			codeMark := []byte("```")
-			out = append(out, codeMark...)
 			out = append(codeMark, out...)
+			out = append(out, codeMark...)
 			back := CowsayResponse{
 				Response_type: "in_channel",
 				Text:          string(out),
