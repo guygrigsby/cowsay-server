@@ -38,7 +38,7 @@ env GOOS=linux GOARCH=amd64 go build
 ```
 
 
-Next, fill out the sample config with real values. The server looks in it's working directory for a file called `config.json` by default. If you want to put it somewhere else, use the `-c` flag on server startup and provide the full path and filename, eg `/path/to/yourconfig.json`.
+Next, fill out the sample config with real values. The server looks in it's working directory for a file called `config.json` by default. If you want to put it somewhere else, use the `-c` flag on server startup and provide the full path and filename, eg `/path/to/yourconfig.json`. You'll need tls certs. If you don't have any, I recommend going over to [Let's Encrypt](https://letsencrypt.org/)
 
 Config
 - `tokens` an array of valid tokens from slack. If none are provided, the server will accept all requests
