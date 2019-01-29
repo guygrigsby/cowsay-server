@@ -43,7 +43,7 @@ func main() {
 		"CowsayExec", config.CowsayExec,
 	)
 	tokens := make(map[string]bool)
-	for _, token := range config.Tokens {
+	for _, token := range config.Tokens() {
 		log.Debug(
 			"Adding token",
 			"Token", token,
@@ -51,7 +51,7 @@ func main() {
 		tokens[token] = true
 	}
 
-	prog := config.CowsayExec
+	prog := config.CowsayExec()
 	if prog == "" {
 		prog = DefaultCowsay
 		log.Info(
@@ -67,7 +67,13 @@ func main() {
 	log.Info(
 		"Starting server...",
 	)
-	for err = http.ListenAndServeTLS(config.ListenOn, config.CertFile, config.KeyFile, mux); err != nil; {
+	if config.KeyFile() == "" {
+		for err = http.ListenAndServe(config.ListenOn(), mux); err != nil; {
+			time.Sleep(time.Duration(2) * time.Second)
+			log.Crit("Restarting", "Error", err)
+		}
+	}
+	for err = http.ListenAndServeTLS(config.ListenOn(), config.CertFile(), config.KeyFile(), mux); err != nil; {
 		time.Sleep(time.Duration(2) * time.Second)
 		log.Crit("Restarting", "Error", err)
 	}

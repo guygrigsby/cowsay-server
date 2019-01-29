@@ -5,13 +5,13 @@ cowsay-server is a Slack slash command server for cowsay
 
 ![Sample](/image/sample.png)
 
-##Setup
+## Setup
 
-####Slack Integration
+#### Slack Integration
 
 In addition to the server, you'll need to set up your slack integration explained [here](https://api.slack.com/slash-commands). I recommend doing this first so you can add your slack tokens. If you don't add any tokens to the config, the server will accept all requests.
 
-####Server
+#### Server
 
 The server is just a webserver wrapper for the `cowsay` executable. As such, you must have `cowsay` on present on the machine. If you don't have it, install it with your distro's package manager.
 
