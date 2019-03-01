@@ -1,4 +1,4 @@
-version = 1.0.1
+version = 1.0.6
 image = cowsay
 registry = guygrigsby
 build = $(image):$(version)
@@ -13,3 +13,6 @@ build:
 release: build
 	@echo "Releasing $(build)..."
 	@docker push $(registry)/$(build)
+.PHONY: run
+run: build
+	@docker run -it -p 8080:8080 $(registry)/$(build)

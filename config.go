@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"os"
 	"os/exec"
 	"strconv"
@@ -22,8 +21,8 @@ func FromEnv() Config {
 	conf.cert = getEnvVal("COWSAY_TLS_CERT")
 	conf.key = getEnvVal("COWSAY_TLS_KEY")
 	port, err := getEnvValInt("COWSAY_PORT")
-	if err != nil {
-		conf.port = 8080
+	if err != nil || port == 0 {
+		port = 8080
 	}
 	conf.port = port
 	return conf
@@ -41,8 +40,8 @@ func (c *cfg) KeyFile() string {
 	return c.key
 }
 
-func (c *cfg) ListenOn() string {
-	return fmt.Sprintf("%d", c.port)
+func (c *cfg) Port() int {
+	return c.port
 }
 
 func (c *cfg) CowsayExec() string {
@@ -68,7 +67,7 @@ type Config interface {
 	Tokens() []string
 	CertFile() string
 	KeyFile() string
-	ListenOn() string
+	Port() int
 	CowsayExec() string
 }
 

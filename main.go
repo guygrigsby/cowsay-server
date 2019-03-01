@@ -1,46 +1,30 @@
 package main
 
 import (
-	"encoding/json"
-	"flag"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/inconshreveable/log15"
 )
 
 const (
 	DefaultCowsay = "/usr/games/cowsay"
+	DefaultPort   = 8080
 )
 
+func gmain() {
+}
+
 func main() {
-	configFile := flag.String("c", "./config.json", "Path to configuration file")
-	flag.Parse()
 	log := log15.New()
-	b, err := ioutil.ReadFile(*configFile)
-	if err != nil {
-		log.Error(
-			"Cannot read config",
-			"Error", err,
-		)
-	}
-	var config Config
-	err = json.Unmarshal(b, &config)
-	if err != nil {
-		log.Error(
-			"Invalid JSON in config",
-			"Error", err,
-		)
-	}
+	config := FromEnv()
 	log.Debug(
 		"Config",
-		"Tokens", fmt.Sprintf("%+v", config.Tokens),
-		"Cert Path", config.CertFile,
-		"Key Path", config.KeyFile,
-		"ListenOn", config.ListenOn,
-		"CowsayExec", config.CowsayExec,
+		"Tokens", fmt.Sprintf("%+v", config.Tokens()),
+		"Cert Path", config.CertFile(),
+		"Key Path", config.KeyFile(),
+		"Port", config.Port(),
+		"CowsayExec", config.CowsayExec(),
 	)
 	tokens := make(map[string]bool)
 	for _, token := range config.Tokens() {
@@ -59,23 +43,13 @@ func main() {
 			"Location", prog,
 		)
 	}
-	mux := http.NewServeMux()
-	mux.Handle(
-		"/cowsay",
-		cowsayHandler(prog, tokens, log),
-	)
-	log.Info(
-		"Starting server...",
-	)
-	if config.KeyFile() == "" {
-		for err = http.ListenAndServe(config.ListenOn(), mux); err != nil; {
-			time.Sleep(time.Duration(2) * time.Second)
-			log.Crit("Restarting", "Error", err)
-		}
-	}
-	for err = http.ListenAndServeTLS(config.ListenOn(), config.CertFile(), config.KeyFile(), mux); err != nil; {
-		time.Sleep(time.Duration(2) * time.Second)
-		log.Crit("Restarting", "Error", err)
-	}
+	addr := fmt.Sprintf(":%d", config.Port())
+	r := gin.Default()
+
+	// Ping handler
+	r.POST("/", cowsayHandler(prog, tokens, log))
+
+	//log.Error(autotls.Run(r, "cowsay.guygrigsby.com").Error())
+	log.Error(r.Run(addr).Error())
 
 }
