@@ -44,11 +44,16 @@ func main() {
 	r := gin.Default()
 
 	r.POST("/", cowsayHandler(prog, tokens, log))
-	log.Info(
-		"Using auto TLS",
-	)
+	r.GET("/healthz", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"status": "not-dead",
+		})
+	})
 
 	if config.TLS() {
+		log.Info(
+			"Using auto TLS",
+		)
 		err := autotls.Run(r, config.Domain())
 		if err != nil {
 			log.Error(
