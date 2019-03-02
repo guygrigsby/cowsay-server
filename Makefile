@@ -17,3 +17,6 @@ release: build
 .PHONY: run
 run: build
 	@docker run -it -p 8080:80 $(registry)/$(build)
+.PHONY: test
+test:
+	go test ./...
