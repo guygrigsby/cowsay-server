@@ -10,6 +10,14 @@
   revision = "5545eab6dad3bbbd6c5ae9186383c2a9d23c0dae"
 
 [[projects]]
+  digest = "1:23a13d0570f5f5913598ed715496e583f6c1508b89965a51cd5bd6abfb8b3bff"
+  name = "github.com/gin-gonic/autotls"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "0b5f4fc15768a919a40d099fab9c397a704dcecd"
+  version = "0.0.2"
+
+[[projects]]
   digest = "1:d5083934eb25e45d17f72ffa86cae3814f4a9d6c073c4f16b64147169b245606"
   name = "github.com/gin-gonic/gin"
   packages = [
@@ -96,6 +104,17 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:398e132d86665f82a3642f675cdadea673d0d1521209ebac3c378141209f99c4"
+  name = "golang.org/x/crypto"
+  packages = [
+    "acme",
+    "acme/autocert",
+  ]
+  pruneopts = "UT"
+  revision = "8dd112bcdc25174059e45e07517d9fc663123347"
+
+[[projects]]
+  branch = "master"
   digest = "1:7c3cf8f9e513ba8a0bd2f2c694646397a45e9d7458e61fabd774abb0f6149372"
   name = "golang.org/x/sys"
   packages = ["unix"]
@@ -122,6 +141,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/gin-gonic/autotls",
     "github.com/gin-gonic/gin",
     "github.com/inconshreveable/log15",
   ]

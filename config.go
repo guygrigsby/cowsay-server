@@ -10,46 +10,28 @@ import (
 
 type cfg struct {
 	tokens []string
-	cert   string
-	key    string
-	port   int
+	domain string
 }
 
 func FromEnv() Config {
 	conf := &cfg{}
 	conf.tokens = getEnvValCSV("COWSAY_TOKENS")
-	conf.cert = getEnvVal("COWSAY_TLS_CERT")
-	conf.key = getEnvVal("COWSAY_TLS_KEY")
-	port, err := getEnvValInt("COWSAY_PORT")
-	if err != nil || port == 0 {
-		port = 8080
-	}
-	conf.port = port
+	conf.domain = getEnvVal("COWSAY_TLS_DOMAIN")
 	return conf
 }
 
 func (c *cfg) Tokens() []string {
 	return c.tokens
 }
-
-func (c *cfg) CertFile() string {
-	return c.cert
-}
-
-func (c *cfg) KeyFile() string {
-	return c.key
-}
-
-func (c *cfg) Port() int {
-	return c.port
-}
-
 func (c *cfg) CowsayExec() string {
 	uri, err := whichCowsay()
 	if err != nil {
 		return DefaultCowsay
 	}
 	return uri
+}
+func (c *cfg) Domain() string {
+	return c.domain
 }
 
 func whichCowsay() (string, error) {
@@ -65,10 +47,8 @@ func whichCowsay() (string, error) {
 
 type Config interface {
 	Tokens() []string
-	CertFile() string
-	KeyFile() string
-	Port() int
 	CowsayExec() string
+	Domain() string
 }
 
 func getEnvValCSV(envVars ...string) []string {

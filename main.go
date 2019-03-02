@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 
+	"github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
 	"github.com/inconshreveable/log15"
 )
 
 const (
 	DefaultCowsay = "/usr/games/cowsay"
-	DefaultPort   = 8080
+	DefaultPort   = 80
 )
 
 func gmain() {
@@ -21,9 +22,6 @@ func main() {
 	log.Debug(
 		"Config",
 		"Tokens", fmt.Sprintf("%+v", config.Tokens()),
-		"Cert Path", config.CertFile(),
-		"Key Path", config.KeyFile(),
-		"Port", config.Port(),
 		"CowsayExec", config.CowsayExec(),
 	)
 	tokens := make(map[string]bool)
@@ -43,13 +41,20 @@ func main() {
 			"Location", prog,
 		)
 	}
-	addr := fmt.Sprintf(":%d", config.Port())
 	r := gin.Default()
 
-	// Ping handler
 	r.POST("/", cowsayHandler(prog, tokens, log))
+	log.Info(
+		"Using auto TLS",
+	)
+	err := autotls.Run(r, config.Domain())
 
-	//log.Error(autotls.Run(r, "cowsay.guygrigsby.com").Error())
-	log.Error(r.Run(addr).Error())
+	if err != nil {
+		log.Error(
+			"TLS failure. Insecure server starting...",
+			"Error", err,
+		)
 
+		log.Error(r.Run(":80").Error())
+	}
 }

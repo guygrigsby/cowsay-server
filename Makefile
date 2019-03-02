@@ -1,6 +1,7 @@
-version = 1.0.6
+version = 2.0.6
 image = cowsay
-registry = guygrigsby
+registry = docker.io/guygrigsby
+#registry = 819820547151.dkr.ecr.us-west-2.amazonaws.com
 build = $(image):$(version)
 
 .PHONY: build
@@ -15,4 +16,4 @@ release: build
 	@docker push $(registry)/$(build)
 .PHONY: run
 run: build
-	@docker run -it -p 8080:8080 $(registry)/$(build)
+	@docker run -it -p 8080:80 $(registry)/$(build)
