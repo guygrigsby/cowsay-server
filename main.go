@@ -47,14 +47,17 @@ func main() {
 	log.Info(
 		"Using auto TLS",
 	)
-	err := autotls.Run(r, config.Domain())
 
-	if err != nil {
-		log.Error(
-			"TLS failure. Insecure server starting...",
-			"Error", err,
-		)
-
-		log.Error(r.Run(":80").Error())
+	if config.TLS() {
+		err := autotls.Run(r, config.Domain())
+		if err != nil {
+			log.Error(
+				"TLS failure.",
+				"Error", err,
+			)
+		}
 	}
+
+	log.Error(r.Run(":80").Error())
+
 }

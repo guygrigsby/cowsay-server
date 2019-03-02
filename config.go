@@ -11,12 +11,14 @@ import (
 type cfg struct {
 	tokens []string
 	domain string
+	tls    bool
 }
 
 func FromEnv() Config {
 	conf := &cfg{}
 	conf.tokens = getEnvValCSV("COWSAY_TOKENS")
 	conf.domain = getEnvVal("COWSAY_TLS_DOMAIN")
+	conf.tls = getEnvVal("COWSAY_AUTO_TLS") == "TRUE"
 	return conf
 }
 
@@ -32,6 +34,9 @@ func (c *cfg) CowsayExec() string {
 }
 func (c *cfg) Domain() string {
 	return c.domain
+}
+func (c *cfg) TLS() bool {
+	return c.tls
 }
 
 func whichCowsay() (string, error) {
@@ -49,6 +54,7 @@ type Config interface {
 	Tokens() []string
 	CowsayExec() string
 	Domain() string
+	TLS() bool
 }
 
 func getEnvValCSV(envVars ...string) []string {
