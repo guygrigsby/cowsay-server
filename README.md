@@ -18,11 +18,12 @@ In addition to the server, you'll need to set up your slack integration explaine
 
 ### Server
 
-  To run the server you need only build the Docker image and run it, or use the one here `guygrigsby/cowsay`. It will automatically get a TLS cert from Let's Encrypt via the go `autotls` package that works with the gin webserver framework as long as you have the envvar `COWSAY_TLS_DOMAIN` set to the proper domain.
+  To run the server you need only build the Docker image and run it, or use the one here `guygrigsby/cowsay`. It can automatically get a TLS cert from Let's Encrypt via the go `autotls` package that works with the gin webserver framework as long as you have the envvar `COWSAY_TLS_DOMAIN` set to the proper domain and `COWSAY_AUTO_TLS` set to `TRUE`.
 
 ### Config
 
 #### EnvVars
- - `COWSAY_TLS_DOMAIN` The domain where the server is hosted. REQUIRED
+ - `COWSAY_TLS_DOMAIN` The domain where the server is hosted.
+ - `COWSAY_AUTO_TLS` set to `TRUE` for the server to automatically get a TLS cert for the domain in the envvar above.
  - `COWSAY_TOKENS` The Slack tokens to verify incoming requests against. If this is blank, all requests will be accepted.
 
