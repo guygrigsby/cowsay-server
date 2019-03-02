@@ -3,12 +3,11 @@
 # cowsay-server
 cowsay-server is a Slack slash command server for cowsay
 
+![Sample](/image/sample.png)
+
 ## TL;DR;
 I just want somewhere to point my Slack app!
-
 `https://cowsay.grigsby.dev`
-
-![Sample](/image/sample.png)
 
 ## Setup
 
@@ -18,7 +17,7 @@ In addition to the server, you'll need to set up your slack integration explaine
 
 ### Server
 
-  To run the server you need only build the Docker image and run it, or use the one here `guygrigsby/cowsay`. It can automatically get a TLS cert from Let's Encrypt via the go `autotls` package that works with the gin webserver framework as long as you have the envvar `COWSAY_TLS_DOMAIN` set to the proper domain and `COWSAY_AUTO_TLS` set to `TRUE`.
+  To run the server you need only build the Docker image and run it, or use the one here `guygrigsby/cowsay`. It can automatically get a TLS cert from Let's Encrypt via the go `autotls` package that works with the gin webserver framework as long as you have the envvar `COWSAY_TLS_DOMAIN` set to the proper domain and `COWSAY_AUTO_TLS` set to `TRUE`. If auto TLS is used, on the first connect for a image/pod the request may timeout in Slack. This is expected because the server has to obtain a cert/key pair.
 
 ### Config
 
