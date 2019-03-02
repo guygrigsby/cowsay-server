@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"net/http"
 	"os/exec"
 
@@ -9,12 +8,17 @@ import (
 	"github.com/inconshreveable/log15"
 )
 
-func cowsayHandler(cowsayExec string, tokens map[string]bool, log log15.Logger) gin.HandlerFunc {
+func cowsayHandler(cowsayExec string, allowed map[string]interface{}, log log15.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if len(tokens) > 0 {
+		if len(allowed) > 0 {
+			log.Info(
+				"Processing tokens",
+				"Count", len(allowed),
+			)
 			token, _ := c.GetPostForm("token")
+			_, ok := allowed[token]
 
-			if tokens[token] == false {
+			if !ok {
 				log.Error(
 					"Token Rejected",
 					"Token", token,
@@ -43,20 +47,8 @@ func cowsayHandler(cowsayExec string, tokens map[string]bool, log log15.Logger) 
 			Response_type: "in_channel",
 			Text:          string(out),
 		}
-
-		resp, err := json.Marshal(back)
-		if err != nil {
-			log.Error(
-				"Cannot marshal response",
-				"Error", err,
-				"Response", string(resp),
-			)
-			c.AbortWithStatus(http.StatusInternalServerError)
-			return
-		}
-
 		c.Header("content-type", "application/json")
-		c.JSON(http.StatusOK, resp)
+		c.JSON(http.StatusOK, back)
 
 	}
 }

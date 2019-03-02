@@ -24,13 +24,13 @@ func main() {
 		"Tokens", fmt.Sprintf("%+v", config.Tokens()),
 		"CowsayExec", config.CowsayExec(),
 	)
-	tokens := make(map[string]bool)
+	allowed := make(map[string]interface{})
 	for _, token := range config.Tokens() {
 		log.Debug(
 			"Adding token",
 			"Token", token,
 		)
-		tokens[token] = true
+		allowed[token] = struct{}{}
 	}
 
 	prog := config.CowsayExec()
@@ -43,7 +43,7 @@ func main() {
 	}
 	r := gin.Default()
 
-	r.POST("/", cowsayHandler(prog, tokens, log))
+	r.POST("/", cowsayHandler(prog, allowed, log))
 	r.GET("/healthz", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"status": "not-dead",

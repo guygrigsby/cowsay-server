@@ -10,7 +10,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /cowsay-server 
 
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y cowsay
+RUN apt-get update && apt-get install -y cowsay ca-certificates && update-ca-certificates
 COPY --from=builder /cowsay-server ./
 EXPOSE 80 443
 ENTRYPOINT ["./cowsay-server"]

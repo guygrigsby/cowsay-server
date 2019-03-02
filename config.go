@@ -47,7 +47,7 @@ func whichCowsay() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return out.String(), nil
+	return strings.TrimRight(out.String(), "\n"), nil
 }
 
 type Config interface {
@@ -59,6 +59,9 @@ type Config interface {
 
 func getEnvValCSV(envVars ...string) []string {
 	str := getEnvVal(envVars...)
+	if str == "" {
+		return nil
+	}
 	return strings.Split(str, ",")
 
 }

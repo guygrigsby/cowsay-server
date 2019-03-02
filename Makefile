@@ -1,4 +1,4 @@
-version = 2.0.9
+version = 2.0.12
 image = cowsay
 registry = docker.io/guygrigsby
 #registry = 819820547151.dkr.ecr.us-west-2.amazonaws.com
