@@ -7,7 +7,7 @@ cowsay-server is a Slack slash command server for cowsay
 
 ## TL;DR;
 I just want somewhere to point my Slack app!
-`https://cowsay.grigsby.dev`
+`https://us-central1-cowsay.cloudfunctions.net/cowsay`
 
 ## Setup
 
