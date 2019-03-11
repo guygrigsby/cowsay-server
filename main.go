@@ -50,24 +50,15 @@ func main() {
 		)
 		tokens[token] = true
 	}
-
-	prog := config.CowsayExec
-	if prog == "" {
-		prog = DefaultCowsay
-		log.Info(
-			"Using default cowsay location",
-			"Location", prog,
-		)
-	}
 	mux := http.NewServeMux()
 	mux.Handle(
 		"/cowsay",
-		cowsayHandler(prog, tokens, log),
+		cowsayHandler(),
 	)
 	log.Info(
 		"Starting server...",
 	)
-	for err = http.ListenAndServeTLS(config.ListenOn, config.CertFile, config.KeyFile, mux); err != nil; {
+	for err = http.ListenAndServe(":8080", mux); err != nil; {
 		time.Sleep(time.Duration(2) * time.Second)
 		log.Crit("Restarting", "Error", err)
 	}

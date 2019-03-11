@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os/exec"
 
+	cowsay "github.com/Code-Hex/Neo-cowsay"
 	"github.com/inconshreveable/log15"
 )
 
-func cowsayHandler(cowsayExec string, tokens map[string]bool, log log15.Logger) http.HandlerFunc {
+func cowsayHandler() http.HandlerFunc {
 	return http.HandlerFunc(
 
 		func(w http.ResponseWriter, r *http.Request) {
+			log := log15.New()
 			defer r.Body.Close()
 			err := r.ParseForm()
 
@@ -25,32 +26,24 @@ func cowsayHandler(cowsayExec string, tokens map[string]bool, log log15.Logger) 
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
-			if len(tokens) > 0 {
-				token := r.PostFormValue("token")
-				if tokens[token] == false {
-					log.Error(
-						"Token Rejected",
-						"Token", token,
-					)
-					w.WriteHeader(http.StatusForbidden)
-					return
-				}
-
-			}
 
 			text := r.PostFormValue("text")
-			out, err := exec.Command(cowsayExec, string(text)).Output()
+
+			say, err := cowsay.Say(
+				cowsay.Phrase(text),
+				cowsay.Type("default"),
+			)
+
 			if err != nil {
 				log.Error(
-					"Cowsay not found",
+					"Cowsay error",
 					"Error", err,
-					"Location", cowsayExec,
 				)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
 			codeMark := []byte("```")
-			out = append(codeMark, out...)
+			out := append(codeMark, say...)
 			out = append(out, codeMark...)
 			back := CowsayResponse{
 				Response_type: "in_channel",
