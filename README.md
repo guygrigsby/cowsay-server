@@ -5,10 +5,10 @@ cowsay-server is a Slack slash command server for cowsay
 
 ## TL;DR;
 I just want somewhere to point my Slack app!
-https://us-central1-cowsay.cloudfunctions.net/cowsay`
+`https://us-central1-cowsay.cloudfunctions.net/cowsay`
 
 I want a docker image!
-https://cloud.docker.com/u/guygrigsby/repository/docker/guygrigsby/cowsay
+`https://cloud.docker.com/u/guygrigsby/repository/docker/guygrigsby/cowsay`
 
 
 
