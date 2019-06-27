@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/guygrigsby/cowsay-server.svg?branch=master)](https://travis-ci.org/guygrigsby/cowsay-server)
+
 # cowsay-server
 cowsay-server is a Slack slash command server for cowsay
 

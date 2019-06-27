@@ -2,10 +2,3 @@ language: go
 
 go:
   - 1.11
-
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y cowsay
-  - sudo apt-get install go-dep
-
-script: ./travis_test.sh
