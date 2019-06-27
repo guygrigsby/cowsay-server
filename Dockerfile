@@ -5,7 +5,7 @@ RUN apk update && apk --no-cache add ca-certificates dep git && update-ca-certif
 COPY . ./
 
 RUN dep ensure
-
+RUN CGO_ENABLED=0 go test github.com/guygrigsby/cowsay-server/...
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /cowsay-server .
 
 FROM ubuntu:18.04
