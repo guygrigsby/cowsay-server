@@ -8,7 +8,7 @@ I just want somewhere to point my Slack app!
 `https://us-central1-cowsay.cloudfunctions.net/cowsay`
 
 I want a docker image!
-`https://cloud.docker.com/u/guygrigsby/repository/docker/guygrigsby/cowsay`
+`https://hub.docker.com/r/guygrigsby/cowsay`
 
 
 
