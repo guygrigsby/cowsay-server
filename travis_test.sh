@@ -1,2 +1,3 @@
 #!/bin/bash
+dep ensure
 go test ./...
