@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/guygrigsby/cowsay-server.svg?branch=master)](https://travis-ci.org/guygrigsby/cowsay-server)
-
 # cowsay-server
 cowsay-server is a Slack slash command server for cowsay
 
@@ -7,9 +5,14 @@ cowsay-server is a Slack slash command server for cowsay
 
 ## TL;DR;
 I just want somewhere to point my Slack app!
-`https://us-central1-cowsay.cloudfunctions.net/cowsay`
+https://us-central1-cowsay.cloudfunctions.net/cowsay`
 
-## Setup
+I want a docker image!
+https://cloud.docker.com/u/guygrigsby/repository/docker/guygrigsby/cowsay
+
+
+
+## Manual Setup
 
 ### Slack Integration
 
